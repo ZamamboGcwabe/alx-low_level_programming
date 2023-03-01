@@ -36,5 +36,5 @@ char *rot13(char *str)
 	}
 
 	result[i] = '\0';
-	return (0);
+	return (result);
 }
