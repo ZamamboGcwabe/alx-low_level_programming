@@ -5,36 +5,35 @@
 /**
   *rot13 - encodes a string using rot13
   *@str: pointer to string
-  *Return: Always 0 (success)
+  *Return: str
   */
 char *rot13(char *str)
 {
-	int i, length = 0;
-	char *result;
+	int index1 = 0, index2;
+	char alphabet[52] = {'A', 'B', 'C', 'D', 'E', 'F',
+		'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
+		'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
+		'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g',
+		'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
+		'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+	char rot13key[52] = {'N', 'O', 'P', 'Q', 'R', 'S', 'T',
+		'U', 'V', 'W', 'X', 'Y', 'Z', 'A', 'B', 'C', 'D',
+		'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'n',
+		'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
+		'y', 'z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
+		'i', 'j', 'k', 'l', 'm'};
 
-	for (i = 0; str[i] != '\0'; i++)
+	while (str[index1])
 	{
-		length++;
+		for (index2 = 0; index2 < 52; index2++)
+		{
+			if (str[index1] == alphabet[index2])
+			{
+				str[index1] = rot13key[index2];
+				break;
+			}
+		}
+		index1++;
 	}
-
-	result = (char *)malloc(sizeof(char) * (length + 1));
-
-	for (i = 0; i < length; i++)
-	{
-		if (str[i] >= 'a' && str[i] <= 'z')
-		{
-			result[i] = (((str[i] - 'a') + 13) % 26) + 'a';
-		}
-		else if (str[i] >= 'A' && str[i] <= 'Z')
-		{
-			result[i] = (((str[i] - 'A') + 13) % 26) + 'A';
-		}
-		else
-		{
-			result[i] = str[i];
-		}
-	}
-
-	result[i] = '\0';
-	return (result);
+	return (str);
 }
