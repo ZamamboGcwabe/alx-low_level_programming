@@ -4,6 +4,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+/**
+  *struct dog - basic info
+  *@name: first member
+  *@age: second member
+  *@owner: third member
+  */
 struct dog
 {
 	char* name;
