@@ -1,5 +1,6 @@
 #include "function_pointers.h"
-#include "0-calc.h"
+#include "3-calc.h"
+#include <stdio.h>
 
 /**
   *main - performs simple operations
@@ -7,11 +8,10 @@
   *@argv: array of pointers
   *Return: always 0
   */
-int main(int __attribute__((__unused__))__ argc, chsr *argv[])
+int main(int __attribute__((__unused__)) argc, char *argv[])
 {
 	int num1, num2;
-	int result;
-	char operator;
+	char *op;
 
 	if (argc != 4)
 	{
@@ -20,41 +20,21 @@ int main(int __attribute__((__unused__))__ argc, chsr *argv[])
 	}
 
 	num1 = atoi(argv[1]);
-	num2 = atoi(argv[3]);
-	operator = argv[2][0];
+	num2 = atoi(argv[1]);
+	op = argv[2];
 
-	switch (operator)
+	if (get_op_func(op) == NULL || op[1] != '\0')
 	{
-		case '+';
-		result = num1 + num2;
-		break;
-		case '-';
-		result = num1 - num2;
-		break;
-		case '*';
-		result = num1 * num2;
-		break;
-		case '/';
-		if (num2 == 0)
-		{
-			printf("Error\n");
-			return (100);
-		}
-		result = num1 / num2;
-		break;
-		case '%';
-		if (num2 == 0)
-		{
-			printf("Error\n");
-			return (100);
-		}
-		result = num1 % num2;
-		break;
-		default:
 		printf("Error\n");
-		return (99);
+		exit(99);
 	}
-	
-	printf("%d\n", result);
+
+	if ((*op == '/' && num2 == 0) || (*op == '%' && num2 ==0))
+	{
+		printf("Error\n");
+		exit(100);
+	}
+
+	printf("%d\n", get_op_func(op)(num1, num2));
 	return (0);
 }
