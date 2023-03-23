@@ -7,54 +7,45 @@
   */
 void print_all(const char * const format, ...)
 {
-	va_list args;
-	const char *f = format;
-	char c;
-	int i;
-	float flt;
+	va_list valist;
+	const char t_arg[] = "cifs";
 	char *str;
+	unsigned int i = 0, j, c = 0;
 
-	va_start(args, format);
+	va_start(valist, format);
 
-	while (*f != '\0')
+	while (format && format[i])
 	{
-		switch (*f)
+		j = 0;
+		while (t_arg[j])
+		{
+			if (format[i] == t_arg[j] && c)
+			{
+				printf(", ");
+				break;
+			} j++;
+		}
+		switch (format[i])
 		{
 			case 'c':
-				c = va_arg(args, int);
-				printf("%c", c);
+				printf("%c", va_arg(valist, int)), c = 1;
 				break;
 			case 'i':
-				i = va_arg(args, int);
-				printf("%d", i);
+				printf("%d", va_arg(valist, int)), c = 1;
 				break;
 			case 'f':
-				flt = va_arg(args, double);
-				printf("%f", flt);
+				printf("%f", va_arg(valist, double)), c = 1;
 				break;
 			case 's':
-				str = va_arg(args, char *);
-				if (str == NULL)
+				str = va_arg(valist, char *), c = 1;
+				if (!str)
 				{
 					printf("(nil)");
-				} else
-				{
-					printf("%s", str);
+					break;
 				}
+				printf("%s", str);
 				break;
-			default:
-				break;
-		}
-
-		f++;
-
-		if (*f != '\0' && (*f == 'c' ||*f == 'i' || *f == 'f' || *f == 's'))
-		{
-			printf(", ");
-		}
+		} i++;
 	}
-
-	va_end(args);
-
 	printf("\n");
 }
