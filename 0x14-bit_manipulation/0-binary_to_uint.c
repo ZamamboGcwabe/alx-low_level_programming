@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- *binary_to_unit - converts a binary number to an unsigned int
+ *binary_to_uint - converts a binary number to an unsigned int
  *@b: number to convert
  *Return: the converted number, or 0
  */
@@ -15,7 +15,8 @@ unsigned int binary_to_uint(const char *b)
 		return (0);
 
 	len = strlen(b);
-	for (i = 0; i < len; i++);
+
+	for (i = 0; i < len; i++)
 	{
 		if (b[i] == '0')
 		{
